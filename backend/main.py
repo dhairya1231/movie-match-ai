@@ -5,6 +5,9 @@ from google import genai
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import time
+from fastapi.staticfiles import StaticFiles
+
+
 
 # Load .env file
 load_dotenv()
@@ -13,7 +16,7 @@ load_dotenv()
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 app = FastAPI()
-
+app.mount("/", StaticFiles(directory="../frontend", html=True), name="frontend")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://127.0.0.1:5500"],
